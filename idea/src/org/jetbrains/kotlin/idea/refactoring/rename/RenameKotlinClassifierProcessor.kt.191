@@ -12,12 +12,8 @@ import com.intellij.psi.search.SearchScope
 // BUNCH 191
 class RenameKotlinClassifierProcessor : RenameKotlinClassifierProcessorCompat() {
 
-    override fun findReferences(
-        element: PsiElement,
-        searchScope: SearchScope,
-        searchInCommentsAndStrings: Boolean
-    ): Collection<PsiReference> {
-        val references = super.findReferences(element, searchScope, searchInCommentsAndStrings)
+    override fun findReferences(element: PsiElement): Collection<PsiReference> {
+        val references = super.findReferences(element)
         return processFoundReferences(element, references)
     }
 }

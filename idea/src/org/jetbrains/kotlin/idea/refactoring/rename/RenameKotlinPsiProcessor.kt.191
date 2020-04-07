@@ -10,18 +10,16 @@ import com.intellij.psi.PsiReference
 import com.intellij.psi.search.SearchScope
 import org.jetbrains.kotlin.idea.search.ideaExtensions.KotlinReferencesSearchOptions
 import org.jetbrains.kotlin.idea.search.ideaExtensions.KotlinReferencesSearchParameters
+import org.jetbrains.kotlin.idea.search.or
+import org.jetbrains.kotlin.idea.search.projectScope
 
 // BUNCH 191
 abstract class RenameKotlinPsiProcessor : RenameKotlinPsiProcessorCompat() {
 
-    override fun findReferences(
-        element: PsiElement,
-        searchScope: SearchScope,
-        searchInCommentsAndStrings: Boolean
-    ): Collection<PsiReference> {
+    override fun findReferences(element: PsiElement): Collection<PsiReference> {
         val searchParameters = KotlinReferencesSearchParameters(
             element,
-            searchScope,
+            element.project.projectScope() or element.useScope,
             kotlinOptions = KotlinReferencesSearchOptions(searchForComponentConventions = false)
         )
         return findReferences(element, searchParameters)

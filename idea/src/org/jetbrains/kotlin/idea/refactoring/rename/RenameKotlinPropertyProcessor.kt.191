@@ -35,13 +35,9 @@ import org.jetbrains.kotlin.resolve.DescriptorUtils
 // BUNCH 191
 class RenameKotlinPropertyProcessor : RenameKotlinPropertyProcessorCompat() {
 
-    override fun findReferences(
-        element: PsiElement,
-        searchScope: SearchScope,
-        searchInCommentsAndStrings: Boolean
-    ): Collection<PsiReference> {
+    override fun findReferences(element: PsiElement): Collection<PsiReference> {
         val references =
-            super.findReferences(element, searchScope, searchInCommentsAndStrings).filterNot { it is KtDestructuringDeclarationReference }
+            super.findReferences(element).filterNot { it is KtDestructuringDeclarationReference }
         return processFoundReferences(element, references)
     }
 
